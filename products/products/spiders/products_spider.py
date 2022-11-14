@@ -9,12 +9,12 @@ class ProductsSpiderSpider(scrapy.Spider):
     def parse(self, response):
         items = ProductsItem()
         
-        all_products = response.css('.s-search-results')
+        all_products = response.css('.s-widget-spacing-small .sg-col-inner')
         
         for product in all_products:
-            product_name = response.css('.a-size-base-plus::text').extract()
-            product_price = response.css('.a-price-fraction , .a-price-whole').css('::text').extract()
-            product_imagelink = response.css('.s-height-equalized .s-image::attr(src)').extract()
+            product_name = product.css('.a-size-base-plus::text').extract()
+            product_price = product.css('.a-price-fraction , .a-price-whole').css('::text').extract()
+            product_imagelink = product.css('.s-height-equalized .s-image::attr(src)').extract()
             
             items['product_name'] = product_name
             items['product_price'] = product_price
